@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.data.dao.BcDao">
+	<resultMap type="com.example.data.bean.Bc" id="bcMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="bc_no" jdbcType="VARCHAR" property="bcNo" />
+		<result column="b_no" jdbcType="VARCHAR" property="bNo" />
+		<result column="c_no" jdbcType="VARCHAR" property="cNo" />
+		<result column="money" jdbcType="BIGINT" property="money" />
+		<result column="num" jdbcType="BIGINT" property="num" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<insert id="insertBc" parameterType="com.example.data.bean.Bc">
+		insert into
+		bc(bc_no,b_no,c_no,money,num,create_time)
+		values(#{bcNo},#{bNo},#{cNo},#{money},#{num},now())
+	</insert>
+
+	<select id="getBcByCondition" parameterType="com.example.data.bean.Bc"
+		resultMap="bcMap">
+		select * from bc
+		<include refid="sqlWhere" />
+	</select>
+	
+	<select id="getBcDtoByConditon" parameterType="com.example.data.bean.Bc"
+		resultType="com.example.data.bean.BcDto">
+		select b.name as bName,b.phone as phone,b.type as bType,bc.bc_no as bcNo,
+		bc.money as money,bc.num as num,bc.create_time as createTime,c.name as cName,
+		c.address as cAddress,c.mobile as cMobile,c.no as cNo,b.no as bNo
+		from bc left join  business b  on b.no = bc.b_no left join customer c
+		on c.no = bc.c_no
+		<include refid="sqlWhere" />
+		<if test=" order==0 ">
+			order by bc.create_time desc
+		</if>
+		<if test=" order==1 ">
+			order by bc.money desc,bc.create_time desc
+		</if>
+		<if test=" order==2 ">
+			order by bc.num desc,bc.create_time desc
+		</if>
+	</select>
+
+<!-- 	<update id="updateUserByCondition" parameterType="com.example.data.bean.User"> -->
+<!-- 		update bc -->
+<!-- 		<include refid="updateSet" /> -->
+<!-- 	</update> -->
+
+<!-- 	<delete id="deleteUserByUserNo" parameterType="com.example.data.bean.User"> -->
+<!-- 		delete from bc -->
+<!-- 		where user_no = #{userNo} -->
+<!-- 	</delete> -->
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="bcNo != '' and bcNo != null ">
+			and bc_no = #{bcNo}
+		</if>
+		<if test="bNo !='' and bNo != null ">
+			and b_no = #{bNo}
+		</if>
+		<if test="cNo !='' and cNo !=null ">
+			and c_no = #{cNo}
+		</if>
+		<if test="money !='' and money !=null ">
+			and money = #{money}
+		</if>
+		<if test="num !='' and num !=null ">
+			and num = #{num}
+		</if>
+	</sql>
+
+<!-- 	<sql id="updateSet"> -->
+<!-- 		set -->
+<!-- 		<if test="name != '' and name != null "> -->
+<!-- 			name = #{name}, -->
+<!-- 		</if> -->
+<!-- 		<if test="psd !='' and psd != null "> -->
+<!-- 			psd = #{psd}, -->
+<!-- 		</if> -->
+<!-- 		<if test="auth !='' and auth !=null "> -->
+<!-- 			auth = #{auth}, -->
+<!-- 		</if> -->
+<!-- 		<if test="userNo !='' and userNo !=null "> -->
+<!-- 			user_no = #{userNo}, -->
+<!-- 		</if> -->
+<!-- 		where user_no = #{userNo} -->
+<!-- 	</sql> -->
+</mapper>

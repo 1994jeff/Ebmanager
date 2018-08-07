@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.data.dao.BusinessDao">
+	<resultMap type="com.example.data.bean.Business" id="businessMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="no" jdbcType="VARCHAR" property="no" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="level" jdbcType="BIGINT" property="level" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<insert id="insertBusiness" parameterType="com.example.data.bean.Business">
+		insert into
+		business(no,name,level,phone,type,create_time)
+		values(#{no},#{name},#{level},#{phone},#{type},now())
+	</insert>
+
+	<select id="getBusinessByCondition" parameterType="com.example.data.bean.User"
+		resultMap="businessMap">
+		select * from business
+		<include refid="sqlWhere" />
+	</select>
+
+	<update id="updateBusinessByCondition" parameterType="com.example.data.bean.Business">
+		update business
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteBusinessByBusinessNo" parameterType="com.example.data.bean.Business">
+		delete from business
+		where no = #{no}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="name != '' and name != null ">
+			and name = #{name}
+		</if>
+		<if test="no !='' and no != null ">
+			and no = #{no}
+		</if>
+		<if test="level !='' and level !=null ">
+			and level = #{level}
+		</if>
+		<if test="phone !='' and phone !=null ">
+			and phone = #{phone}
+		</if>
+		<if test="type !='' and type !=null ">
+			and type = #{type}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="name != '' and name != null ">
+			name = #{name},
+		</if>
+		<if test="level !='' and level != null ">
+			level = #{level},
+		</if>
+		<if test="phone !='' and phone !=null ">
+			phone = #{phone},
+		</if>
+		<if test="type !='' and type !=null ">
+			type = #{type},
+		</if>
+		<if test="no !='' and no !=null ">
+			no = #{no}
+		</if>
+		where no = #{no}
+	</sql>
+</mapper>

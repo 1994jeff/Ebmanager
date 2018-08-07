@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.data.dao.CustomerDao">
+	<resultMap type="com.example.data.bean.Customer" id="customerMap">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="no" jdbcType="VARCHAR" property="no" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="mobile" jdbcType="LONGVARCHAR" property="mobile" />
+		<result column="level" jdbcType="BIGINT" property="level" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<insert id="insertCustomer" parameterType="com.example.data.bean.Customer">
+		insert into
+		customer(no,name,address,mobile,level,create_time)
+		values(#{no},#{name},#{address},#{mobile},#{level},now())
+	</insert>
+
+	<select id="getCustomerByCondition" parameterType="com.example.data.bean.Customer"
+		resultMap="customerMap">
+		select * from customer
+		<include refid="sqlWhere" />
+	</select>
+
+	<update id="updateCustomerByCondition" parameterType="com.example.data.bean.Customer">
+		update customer
+		<include refid="updateSet" />
+	</update>
+
+	<delete id="deleteCustomerByCustomerNo" parameterType="com.example.data.bean.Customer">
+		delete from customer
+		where no = #{no}
+	</delete>
+
+	<sql id="sqlWhere">
+		where
+		1=1
+		<if test="name != '' and name != null ">
+			and name = #{name}
+		</if>
+		<if test="no !='' and no != null ">
+			and no = #{no}
+		</if>
+		<if test="level !='' and level !=null ">
+			and level = #{level}
+		</if>
+		<if test="mobile !='' and mobile !=null ">
+			and mobile = #{mobile}
+		</if>
+	</sql>
+
+	<sql id="updateSet">
+		set
+		<if test="name != '' and name != null ">
+			name = #{name},
+		</if>
+		<if test="level !='' and level != null ">
+			level = #{level},
+		</if>
+		<if test="address !='' and address !=null ">
+			address = #{address},
+		</if>
+		<if test="mobile !='' and mobile !=null ">
+			mobile = #{mobile},
+		</if>
+		<if test="no !='' and no !=null ">
+			no = #{no}
+		</if>
+		where no = #{no}
+	</sql>
+</mapper>
