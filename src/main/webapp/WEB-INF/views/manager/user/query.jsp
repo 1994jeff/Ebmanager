@@ -78,6 +78,7 @@
 										<td>用户名</td>
 										<td>密码</td>
 										<td>用户类型</td>
+										<td>用户状态</td>
 <!-- 										<td>创建时间</td> -->
 									</tr>
 <%-- 									<c:forEach items="${list}" begin="0" end="${list.size()}" --%>
@@ -155,13 +156,21 @@
 			html += "<td>"+user.userNo+"</td>";
 			html += "<td>"+user.name+"</td>";
 			html += "<td>"+user.psd+"</td>";
-			if(user.auth==0)
+			if(user.auth==3)
 			{
-				html += "<td>商家</td>";
+				html += "<td>普通用户</td>";
 			}else if(user.auth==1){
 				html += "<td>管理员</td>";
-			}else if(user.auth==2){
-				html += "<td>文章</td>";
+			}else{
+				html += "<td>未知</td>";
+			}
+			if(user.status==1)
+			{
+				html += "<td>禁用</td>";
+			}else if(user.status==2){
+				html += "<td>激活</td>";
+			}else{
+				html += "<td>未知</td>";
 			}
 // 			html += "<td>"+getFormatDates(user.createTime,5)+"</td>";
 			return html;

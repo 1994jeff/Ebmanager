@@ -90,8 +90,8 @@
 										<tr>
 											<td>${v.index+1}</td>
 											<td>${customer.no}</td>
-											<td>${customer.name}</td>
-											<td>${customer.address}</td>
+											<td><span id="artile">${customer.name}</span></td>
+											<td><span id="author">${customer.address}</span></td>
 											<td id=""><span id="content">${customer.mobile}</span></td>
 											<td><c:if test="${customer.level==0}">校内文章</c:if> <c:if
 													test="${customer.level==1}">校外文章</c:if> <c:if
@@ -121,8 +121,22 @@
 	<script type="text/javascript">
 	$(function() {
 		var str = $('#content').text();
-        str = str.substr(0,25) + '...' ;
+		if(str.length>25){
+			str = str.substr(0,25) + '...' ;
+        }
         $("#content").text(str);
+        
+        var artile = $('#artile').text();
+        if(artile.length>10){
+        	artile = artile.substr(0,10) + '...' ;
+        }
+        $("#artile").text(artile);
+        
+        var author = $('#author').text();
+        if(author.length>5){
+        	author = author.substr(0,5) + '...' ;
+        }
+        $("#author").text(author);
 	});
 	</script>
 </body>

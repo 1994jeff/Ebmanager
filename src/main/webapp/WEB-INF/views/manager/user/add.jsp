@@ -47,12 +47,12 @@
 		    <input type="text" class="form-control" name="psd" id="psd" value="aaAA1111" placeholder="Please enter the user password" style="background: white;">
 		    
 		    <br />
-<!-- 			<label for="auth" style="color:white">用户类别 (商家, 文章)</label> -->
-<!-- 			<select id="auth" style="border-radius: 5px;width: 100%;height: 36px;background-color: white;padding-left: 10px;font-size: 14px;"> -->
-<!-- 				<option></option> -->
-<!-- 				<option value="0">商家</option> -->
-<!-- 				<option value="2">文章</option> -->
-<!-- 			</select> -->
+			<label for="auth" style="color:white">用户状态 (禁用, 激活)</label>
+			<select id="auth" style="border-radius: 5px;width: 100%;height: 36px;background-color: white;padding-left: 10px;font-size: 14px;">
+				<option>--请选择用户状态--</option>
+				<option value="1">禁用</option>
+				<option value="2">激活</option>
+			</select>
 			<br /><br /><br />
 			<button type="button" onclick="checkParam()" class="btn btn-default formSub">register</button>
 		</form></div>
@@ -66,7 +66,7 @@
     function checkParam(){
     	var name = $('#name').val();
     	var psd = $('#psd').val();
-//     	var auth = $('#auth').val();
+     	var auth = $('#auth').val();
     	if(""==name){
     		alert("Username can not be empty!");
     		return ;
@@ -75,11 +75,15 @@
     		alert("Password can not be blank!");
     		return ;
     	}
-    	checkPsd(psd,name);
+    	if(""==auth || auth=="--请选择用户状态--"){
+    		alert("请选择用户状态!");
+    		return ;
+    	}
+    	checkPsd(psd,name,auth);
     }
     
   //要求，不少于8位，必须含有两个数字，不能与原来的密码相似，不能都为大写或小写
-	function checkPsd(psd,name) {
+	function checkPsd(psd,name,auth) {
 		if (psd.length < 8) {
 			alert("新密码长度不能小于8位!");
 			return;
@@ -118,7 +122,8 @@
 			dataType:'json',
 			data:{
 				'name':name,
-				'psd':psd
+				'psd':psd,
+				'status':auth
 			},
 			url:'${pageContext.request.contextPath}/user/addUser.do',
 			success:function(data){

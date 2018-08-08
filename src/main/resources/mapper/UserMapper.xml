@@ -11,8 +11,8 @@
         <result  column="create_time"      jdbcType="TIMESTAMP"       property="createTime"/>
 	</resultMap>
 	<insert id="insertUser" parameterType="com.example.data.bean.User">
-		insert into user(name,psd,auth,create_time,user_no)
-		values(#{name},#{psd},#{auth},now(),#{userNo})
+		insert into user(name,psd,auth,create_time,user_no,status)
+		values(#{name},#{psd},#{auth},now(),#{userNo},#{status})
 	</insert>
 	
 	<select id="getUserByCondition" parameterType="com.example.data.bean.User" resultMap="userMap">

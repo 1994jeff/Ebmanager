@@ -62,12 +62,12 @@
 			<div class="col-sm-12">
 				<div class="panel panel-default ">
 					<div class="panel-heading">
-						<span>用户查询</span>
+						<span>文章查询</span>
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive" style="text-align: center;">
 							<div style="width: 100%; text-align: left; margin-bottom: 20px;">
-								<input id="seacher" type="text" placeholder="请输入要查询的用户名"/><span class="btn-style btn">搜索</span>
+								<input id="seacher" type="text" placeholder="请输入要查询的文章名"/><span class="btn-style btn">搜索</span>
 							</div>
 							<table
 								class="table table-striped table-bordered table-hover table-condensed">
@@ -76,9 +76,9 @@
 										<td>#</td>
 										<td>文章编号</td>
 										<td>文章名</td>
-										<td>发货地址</td>
+										<td>文章作者</td>
 										<td>文章类型</td>
-										<td>联系方式</td>
+										<td>文章内容</td>
 <!-- 										<td>创建时间</td> -->
 									</tr>
 <%-- 									<c:forEach items="${list}" begin="0" end="${list.size()}" --%>

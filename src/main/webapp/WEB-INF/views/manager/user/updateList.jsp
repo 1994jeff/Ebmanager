@@ -75,6 +75,7 @@
 										<td>用户名</td>
 										<td>密码</td>
 										<td>用户类型</td>
+										<td>用户状态</td>
 										<td>创建时间</td>
 										<td>Operation</td>
 									</tr>
@@ -88,6 +89,8 @@
 											<td><c:if test="${user.auth==0}">商家</c:if> <c:if
 													test="${user.auth==1}">管理员</c:if> <c:if
 													test="${user.auth==2}">文章</c:if></td>
+											<td><c:if test="${user.status==1}">禁用</c:if> <c:if
+											test="${user.status==2}">激活</c:if></td>
 											<td><fmt:formatDate value="${user.createTime}"
 													pattern="yyyy-MM-dd HH:mm:ss" /></td>
 											<td><a
